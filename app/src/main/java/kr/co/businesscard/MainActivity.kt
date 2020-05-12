@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         business_card_recycler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        businessCardAdapter.setItems(cardRealm.where(BusinessCardItem::class.java).findAll())
         cardRealm.addChangeListener { businessCardAdapter.notifyDataSetChanged() }
 
         search_button.setOnClickListener {

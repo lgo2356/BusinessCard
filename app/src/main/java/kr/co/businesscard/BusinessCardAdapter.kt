@@ -16,11 +16,8 @@ import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.layout_card.view.*
 
 class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolder>() {
-    private var mCards: List<BusinessCardItem> = ArrayList()
-
-    fun setItems(items: List<BusinessCardItem>) {
-        mCards = items
-    }
+    private val mCards: List<BusinessCardItem> =
+        Realm.getDefaultInstance().where(BusinessCardItem::class.java).findAll()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BCViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -53,5 +50,4 @@ class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolde
         val contactText: TextView = itemView.business_card_contact
         val deleteButton: Button = itemView.delete_button
     }
-
 }
