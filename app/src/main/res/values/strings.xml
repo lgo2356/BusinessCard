@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BusinessCard</string>
+    <string name="search_button_str">Search</string>
+    <string name="register_button_str">Register</string>
+    <string name="delete_button_str">Delete</string>
+    <string name="submit_button_str">Submit</string>
+    <string name="name_edit_hint">Name</string>
+    <string name="contact_edit_hint">Contact</string>
+    <string name="image_description">Photo</string>
+</resources>
