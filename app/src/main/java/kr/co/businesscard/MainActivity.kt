@@ -24,16 +24,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /* TEST */
-        var currentUserUrl: String? = null
-
         business_card_recycler.adapter = businessCardAdapter
         business_card_recycler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         cardRealm.addChangeListener { businessCardAdapter.notifyDataSetChanged() }
-        businessCardAdapter.items =
-            cardRealm.where(BusinessCardItem::class.java).findAll()  // RealmResults 반환
+        businessCardAdapter.items = cardRealm.where(BusinessCardItem::class.java).findAll()
 
         search_button.setOnClickListener {
             moveToActivity(SearchActivity::class.java)
@@ -45,6 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         delete_button.setOnClickListener {
             moveToActivity(DeleteActivity::class.java)
+        }
+
+        url_button.setOnClickListener {
+            moveToActivity(UrlActivity::class.java)
         }
     }
 

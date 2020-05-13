@@ -11,9 +11,8 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.layout_card.view.*
 
 class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolder>() {
-
-    var items: List<BusinessCardItem> = listOf()
-        set(value) {
+    var items: List<BusinessCardItem> = listOf()  // Type: RealmResults<BusinessCardItem>
+        set(value) {  // value : Realm.getDefaultInstance().where(BusinessCardItem::class.java).findAll()
             field = value
             notifyDataSetChanged()
         }

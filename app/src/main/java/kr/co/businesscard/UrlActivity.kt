@@ -2,7 +2,6 @@ package kr.co.businesscard
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -11,14 +10,15 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.kotlin.where
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.url_recycler
+import kotlinx.android.synthetic.main.activity_url.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-class SearchActivity : AppCompatActivity() {
+class UrlActivity : AppCompatActivity() {
     private var disposable: Disposable? = null
     private val fieldNames: ArrayList<String> = ArrayList()
     private val urls: ArrayList<String> = ArrayList()
@@ -27,7 +27,7 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_url)
 
         url_recycler.adapter = urlAdapter
         url_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -59,28 +59,13 @@ class SearchActivity : AppCompatActivity() {
                 }
             )
 
-        search_button.setOnClickListener {
-            Realm.getDefaultInstance().use {
-                val results: RealmResults<UrlItem> = it.where(UrlItem::class.java).findAll()
-                results[0]?.currentUserUrl?.let { url -> urls.add(url) }
-
-//                results[0]?.currentUserAuthorizationsHtmlUrl?.let { url -> urls.add(url) }
-//                results[0]?.let { data ->
-//                    data.currentUserUrl?.let { urls.add(it) }
-//                    urls.add(data.currentUserUrl)
-//                    data.currentUserAuthorizationsHtmlUrl
-//                }
-//
-//                results[0]?.authorizationsUrl?.let { it1 ->
-//                    urls.add(it1)
-//                }
-
-//        val fields: Array<Field> = TestData::class.java.declaredFields
-//        for (field in fields) {
-//            fieldNames.add(field.name)
-//        }
-
-//                adapter.notifyDataSetChanged()
+        refresh_button.setOnClickListener {
+            Realm.getDefaultInstance().use { realm ->
+                realm.executeTransaction {
+                    val urlItem: UrlItem = UrlItem()
+                    urlItem.currentUserUrl = "abc"
+                    realm.copyToRealmOrUpdate(urlItem)
+                }
             }
         }
     }

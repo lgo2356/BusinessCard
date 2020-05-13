@@ -21,6 +21,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".DeleteActivity" />
+        <activity android:name=".UrlActivity" />
     </application>
-
 </manifest>
