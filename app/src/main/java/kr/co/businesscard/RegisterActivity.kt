@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
             .subscribe {
                 if (it.name != "" && it.contact != "") {
                     val controller = RealmController()
-                    controller.insertCardInfo(it)
+                    controller.registerBusinessCard(it)
                 }
                 finish()
             }
@@ -47,13 +47,6 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-
-        val item: BusinessCardItem? = BusinessCardItem()
-
-        if (item?.name?.isNotEmpty() == true && item.contact != "") {
-            val controller = RealmController()
-            controller.insertCardInfo(item)
-        }
 
         submit_button.setOnClickListener {
             subject.onNext(it)

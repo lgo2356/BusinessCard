@@ -9,7 +9,7 @@ inline fun <reified T : RealmObject> T.deleteFromRealmWithTransaction() {
 }
 
 class RealmController {
-    fun insertCardInfo(info: BusinessCardItem) {
+    fun registerBusinessCard(info: BusinessCardItem) {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction {
                 it.copyToRealm(info)

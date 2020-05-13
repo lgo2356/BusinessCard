@@ -1,6 +1,5 @@
 package kr.co.businesscard
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.rxjava3.core.Observable
 import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.kotlin.delete
-import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.layout_card.view.*
 
 class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolder>() {
-    private val mCards: List<BusinessCardItem> =
-        Realm.getDefaultInstance().where(BusinessCardItem::class.java).findAll()
+
+    var items: List<BusinessCardItem> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BCViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -26,7 +25,7 @@ class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolde
     }
 
     override fun onBindViewHolder(holder: BCViewHolder, position: Int) {
-        val cardItem = mCards[position]
+        val cardItem = items[position]
 
         holder.nameText.text = cardItem.name
         holder.contactText.text = cardItem.contact
@@ -42,7 +41,7 @@ class BusinessCardAdapter : RecyclerView.Adapter<BusinessCardAdapter.BCViewHolde
     }
 
     override fun getItemCount(): Int {
-        return mCards.size
+        return items.size
     }
 
     class BCViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
