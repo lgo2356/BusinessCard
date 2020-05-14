@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.realm.Realm
 import kotlinx.android.synthetic.*
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val businessCardAdapter: BusinessCardAdapter = BusinessCardAdapter()
@@ -29,7 +31,8 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         cardRealm.addChangeListener { businessCardAdapter.notifyDataSetChanged() }
-        businessCardAdapter.items = cardRealm.where(BusinessCardItem::class.java).findAll()
+        businessCardAdapter.items =
+            cardRealm.where(BusinessCardItem::class.java).findAll()  // 명함 테이블 전체 검색 결과를 set
 
         search_button.setOnClickListener {
             moveToActivity(SearchActivity::class.java)
@@ -45,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         url_button.setOnClickListener {
             moveToActivity(UrlActivity::class.java)
+        }
+
+        test_button.setOnClickListener {
+            // TODO
         }
     }
 

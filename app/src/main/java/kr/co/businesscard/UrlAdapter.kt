@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_url_recycler.view.*
 
 class UrlAdapter : RecyclerView.Adapter<UrlAdapter.ViewHolder>() {
-    var items: List<UrlItem> = listOf()
+    var items: List<UrlModel> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -23,8 +23,8 @@ class UrlAdapter : RecyclerView.Adapter<UrlAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val urlItem = items[position]
 
-        holder.urlNameText.text = "Current user url"
-        holder.urlValueText.text = urlItem.currentUserUrl
+        holder.keyText.text = urlItem.key
+        holder.urlText.text = urlItem.value
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +32,7 @@ class UrlAdapter : RecyclerView.Adapter<UrlAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val urlNameText: TextView = itemView.text_url_name
-        val urlValueText: TextView = itemView.text_url_value
+        val keyText: TextView = itemView.text_key
+        val urlText: TextView = itemView.text_url
     }
 }

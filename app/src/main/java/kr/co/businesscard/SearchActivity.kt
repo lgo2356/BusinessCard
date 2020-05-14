@@ -2,7 +2,6 @@ package kr.co.businesscard
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -11,7 +10,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.kotlin.where
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_search.*
 import okhttp3.OkHttpClient
@@ -33,7 +31,7 @@ class SearchActivity : AppCompatActivity() {
         url_recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         urlRealm.addChangeListener { urlAdapter.notifyDataSetChanged() }
-        urlAdapter.items = urlRealm.where(UrlItem::class.java).findAll()
+        urlAdapter.items = urlRealm.where(UrlModel::class.java).findAll()
 
         disposable = Observable.create<OkHttpClient> { subscriber ->
             Log.d("OkHttp", "Start Rx")
@@ -46,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
                     val request: Request = Request.Builder().url(url).build()
                     val response: Response = client.newCall(request).execute()
                     val resultJson: String? = response.body?.string()
-                    val testJson: UrlItem = Gson().fromJson(resultJson, UrlItem::class.java)
+                    val testJson: UrlModel = Gson().fromJson(resultJson, UrlModel::class.java)
 
                     Realm.getDefaultInstance().use { realm1 ->
                         realm1.executeTransaction { realm2 ->
@@ -61,8 +59,8 @@ class SearchActivity : AppCompatActivity() {
 
         search_button.setOnClickListener {
             Realm.getDefaultInstance().use {
-                val results: RealmResults<UrlItem> = it.where(UrlItem::class.java).findAll()
-                results[0]?.currentUserUrl?.let { url -> urls.add(url) }
+                val results: RealmResults<UrlModel> = it.where(UrlModel::class.java).findAll()
+//                results[0]?currentUserUrl?.let { url -> urls.add(url) }
 
 //                results[0]?.currentUserAuthorizationsHtmlUrl?.let { url -> urls.add(url) }
 //                results[0]?.let { data ->
